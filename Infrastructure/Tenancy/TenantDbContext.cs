@@ -6,9 +6,15 @@ namespace Infrastructure.Tenancy;
 public class TenantDbContext (DbContextOptions<TenantDbContext> options) 
     : EFCoreStoreDbContext<CompanyTenantInfo> (options)
 {
+    
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
         modelBuilder.Entity<CompanyTenantInfo>().ToTable("Tenants" , "MultiTenancy");
+    }
+
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    {
+        
     }
 }

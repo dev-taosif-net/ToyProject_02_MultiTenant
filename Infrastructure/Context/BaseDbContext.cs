@@ -1,4 +1,5 @@
-﻿using Finbuckle.MultiTenant.Abstractions;
+﻿using System.Reflection;
+using Finbuckle.MultiTenant.Abstractions;
 using Finbuckle.MultiTenant.Identity.EntityFrameworkCore;
 using Infrastructure.Identity.Models;
 using Infrastructure.Tenancy;
@@ -20,14 +21,27 @@ public abstract class BaseDbContext
         IdentityUserPasskey<string> // TUserPasskey 
     >
 {
+    private new CompanyTenantInfo? TenantInfo {get; set;}
     protected BaseDbContext( IMultiTenantContextAccessor<CompanyTenantInfo> multiTenantContextAccessor, DbContextOptions options) : base(multiTenantContextAccessor, options)
     {
+        TenantInfo = multiTenantContextAccessor.MultiTenantContext?.TenantInfo;
+    }
+    
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    {
+        base.OnConfiguring(optionsBuilder);
+
+        if (!string.IsNullOrWhiteSpace(TenantInfo.ConnectionString))
+        {
+            optionsBuilder.UseSqlServer(TenantInfo.ConnectionString ,
+                options => options.MigrationsAssembly(Assembly.GetExecutingAssembly().FullName));
+        }
     }
 
-    // protected override void OnModelCreating(ModelBuilder builder)
-    // {
-    //     base.OnModelCreating(builder);
-    // }
+    protected override void OnModelCreating(ModelBuilder builder)
+    {
+        base.OnModelCreating(builder);
+    }
 }
 
 
