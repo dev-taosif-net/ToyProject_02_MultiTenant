@@ -1,4 +1,5 @@
-﻿using Finbuckle.MultiTenant.Abstractions;
+﻿using Domain.Entities;
+using Finbuckle.MultiTenant.Abstractions;
 using Infrastructure.Tenancy;
 using Microsoft.EntityFrameworkCore;
 
@@ -10,6 +11,6 @@ public class ApplicationDbContext : BaseDbContext
     {
     }
     
-    public DbSet<CompanyTenantInfo> Company { get; set; }
+    public DbSet<Company> Company { get; set; }
     
 }

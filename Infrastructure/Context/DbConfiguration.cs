@@ -79,15 +79,24 @@ internal class DbConfiguration
         }
     }
     
-    internal class IdentityUserPasskeyConfiguration : IEntityTypeConfiguration<IdentityUserPasskey<string>>
-    {
-        public void Configure(Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder<IdentityUserPasskey<string>> builder)
-        {
-            builder
-                .ToTable("UserPasskey", "Identity")
-                .IsMultiTenant();
-        }
-    }
+    //Shows Error with Passkey
+    //Unable to create a 'DbContext' of type 'ApplicationDbContext'. The exception 'The entity type 'IdentityPasskeyData' requires a primary key to be defined. If you intended to use a keyless entity type, call 'HasNoKey' in 'OnModelCreating'. For more information on keyless entity types, see https://go.micr
+    // osoft.com/fwlink/?linkid=2141943.' was thrown while attempting to create an instance. For the different patterns supported at design time, 
+    // internal class IdentityUserPasskeyConfiguration : IEntityTypeConfiguration<IdentityUserPasskey<string>>
+    // {
+    //     public void Configure(Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder<IdentityUserPasskey<string>> builder)
+    //     {
+    //         builder
+    //             .ToTable("UserPasskey", "Identity")
+    //             .IsMultiTenant();
+    //         
+    //         builder.HasKey(x => new { x.UserId});
+    //         
+    //
+    //         // builder.Property(x => x.Id)
+    //         //     .ValueGeneratedOnAdd();
+    //     }
+    // }
     
     internal class CompanyConfiguration : IEntityTypeConfiguration<Company>
     {

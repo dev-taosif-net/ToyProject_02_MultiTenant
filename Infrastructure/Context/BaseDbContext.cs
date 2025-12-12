@@ -31,7 +31,7 @@ public abstract class BaseDbContext
     {
         base.OnConfiguring(optionsBuilder);
 
-        if (!string.IsNullOrWhiteSpace(TenantInfo.ConnectionString))
+        if (!string.IsNullOrWhiteSpace(TenantInfo?.ConnectionString))
         {
             optionsBuilder.UseSqlServer(TenantInfo.ConnectionString ,
                 options => options.MigrationsAssembly(Assembly.GetExecutingAssembly().FullName));
