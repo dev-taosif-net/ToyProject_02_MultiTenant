@@ -1,6 +1,7 @@
 ﻿using Finbuckle.MultiTenant.AspNetCore.Extensions;
 using Finbuckle.MultiTenant.EntityFrameworkCore.Extensions;
 using Finbuckle.MultiTenant.Extensions;
+using Infrastructure.Context;
 using Infrastructure.Tenancy;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
@@ -16,11 +17,15 @@ public static class StartUp
         return services
             .AddDbContext<TenantDbContext>(options =>
                 options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")))
+            
             .AddMultiTenant<CompanyTenantInfo>()
             .WithHeaderStrategy(TenancyConstants.TenantIdName)
             .WithClaimStrategy(TenancyConstants.TenantIdName)
             .WithEFCoreStore<TenantDbContext, CompanyTenantInfo>()
-            .Services;
+            .Services
+            
+            .AddDbContext<ApplicationDbContext>(options =>
+                options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
 
     }
 
