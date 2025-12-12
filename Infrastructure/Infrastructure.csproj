@@ -11,6 +11,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <PackageReference Include="Finbuckle.MultiTenant" Version="10.0.1" />
       <PackageReference Include="Finbuckle.MultiTenant.AspNetCore" Version="10.0.1" />
       <PackageReference Include="Finbuckle.MultiTenant.EntityFrameworkCore" Version="10.0.1" />
       <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="10.0.1" />

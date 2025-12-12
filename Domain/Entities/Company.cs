@@ -1,8 +1,8 @@
 ﻿namespace Domain.Entities;
 
-public class School
+public class Company
 {
-    public int Id { get; set; }
+    public long Id { get; set; }
     public required string Name { get; set; }
     public required DateOnly EstablishedDate { get; set; }
 }
