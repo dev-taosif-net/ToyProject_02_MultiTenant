@@ -14,18 +14,18 @@ public static class StartUp
 {
     public static IServiceCollection AddInfrastructureServices(this IServiceCollection services, IConfiguration configuration)
     {
-        return services
-            .AddDbContext<TenantDbContext>(options =>
-                options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")))
-            
-            .AddMultiTenant<CompanyTenantInfo>()
+        services.AddDbContext<TenantDbContext>(options =>
+            options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
+
+        services.AddMultiTenant<CompanyTenantInfo>()
             .WithHeaderStrategy(TenancyConstants.TenantIdName)
             .WithClaimStrategy(TenancyConstants.TenantIdName)
-            .WithEFCoreStore<TenantDbContext, CompanyTenantInfo>()
-            .Services
-            
-            .AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
+            .WithEFCoreStore<TenantDbContext, CompanyTenantInfo>();
+
+        services.AddDbContext<ApplicationDbContext>(options =>
+            options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
+
+        return services;
 
     }
 

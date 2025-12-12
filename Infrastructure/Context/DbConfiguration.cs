@@ -1,4 +1,5 @@
-﻿using Finbuckle.MultiTenant.EntityFrameworkCore.Extensions;
+﻿using Domain.Entities;
+using Finbuckle.MultiTenant.EntityFrameworkCore.Extensions;
 using Infrastructure.Identity.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -47,7 +48,7 @@ internal class DbConfiguration
         }
     }
     
-    internal class Login : IEntityTypeConfiguration<IdentityUserLogin<string>>
+    internal class LoginConfiguration : IEntityTypeConfiguration<IdentityUserLogin<string>>
     {
         public void Configure(Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder<IdentityUserLogin<string>> builder)
         {
@@ -68,7 +69,7 @@ internal class DbConfiguration
         }
     }
     
-    internal class IdentityUserToken : IEntityTypeConfiguration<IdentityUserToken<string>>
+    internal class IdentityUserTokenConfiguration : IEntityTypeConfiguration<IdentityUserToken<string>>
     {
         public void Configure(Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder<IdentityUserToken<string>> builder)
         {
@@ -78,13 +79,26 @@ internal class DbConfiguration
         }
     }
     
-    internal class IdentityUserPasskey : IEntityTypeConfiguration<IdentityUserPasskey<string>>
+    internal class IdentityUserPasskeyConfiguration : IEntityTypeConfiguration<IdentityUserPasskey<string>>
     {
         public void Configure(Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder<IdentityUserPasskey<string>> builder)
         {
             builder
                 .ToTable("UserPasskey", "Identity")
                 .IsMultiTenant();
+        }
+    }
+    
+    internal class CompanyConfiguration : IEntityTypeConfiguration<Company>
+    {
+        public void Configure(Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder<Company> builder)
+        {
+            builder
+                .ToTable("Companies", "Organization")
+                .IsMultiTenant();
+            
+            builder.Property(x=>x.Name).IsRequired();
+            
         }
     }
 
